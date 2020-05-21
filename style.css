@@ -1,0 +1,22 @@
+html {
+	background-image: url("img/bgImg.jpg");
+	background-size: 100%;
+}
+#screen {
+	width:400px;
+	height:600px;
+	background-color: white;
+	margin:auto;
+	display: flex;
+	flex-wrap: wrap; 
+}
+.glob {
+	margin:0;
+	padding:0;
+}
+.pixel {
+	width:40px;
+	height:40px;
+	border:1px solid black;
+	box-sizing: border-box;
+}
