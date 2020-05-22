@@ -28,6 +28,7 @@ restart.onclick = function restart() {
 	let x = document.getElementsByClassName("pixel");
 	for (let a of x) {
 		a.style.backgroundColor = "white";
+		bool = true;
 	}
 }
 	document.addEventListener("keypress", function(e) {
