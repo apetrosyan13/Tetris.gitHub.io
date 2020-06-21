@@ -1,4 +1,3 @@
-
 let bool = true;
 let x = 1;
 let y = 0;
@@ -13,7 +12,7 @@ let timerSec = 0;
 let timerMin = 0;
 let timeBool = true;
 let firstStart = true;
-let drowArray = [[]];
+let drowArray = [[], [], [], []];
 let allowNew = false;
 document.getElementById("sekundomer").innerText = `${timerMin}:${timerSec}:${timerMs}`;
 document.getElementById("level").innerText = `${level}`;
@@ -73,6 +72,10 @@ function selectPixel(e) {
 		newId.shift();
 		newId = newId.join("");
 		drowArray[0].push(newId);
+		drowArray[1].push(newId);
+		drowArray[2].push(newId);
+		drowArray[3].push(newId);
+		console.log(drowArray);
 		let p = document.getElementsByClassName("drowPixel");
  		for (let elem of p) {
  			if (elem.style.backgroundColor !== "rgba(106, 211, 99, 0.44)") {
@@ -102,12 +105,26 @@ function selectPixel(e) {
  		}
 	}
 }
+function getX(str) {
+  str =str.split("/");
+  str = str[0].split("");
+  str.shift();
+  str = str.join()
+  return str;
+}
+function getY(str) {
+  str = str.split("/");
+  str = str[1];
+  return str;
+}
 document.getElementById("nextFigureButton").addEventListener("click", playF);
 function playF() {
 	allowNew = true;
 	let drawEl = document.getElementsByClassName("drowPixel");
 	for (let elem of drawEl) {
 		elem.style.backgroundColor = "black";
+		elem.setAttribute("class", `drowPixel glob ${l}/${k}`);
+
 	}
 	console.log(drowArray[0]);
 }
@@ -136,7 +153,7 @@ function goLeft(arr) {
 	}
 }
 function goDown(arr) {
-	for (let i = 0; i < arr.length; i++) {
+	for (let i = 0; i < arr[0].length; i++) {
 		document.getElementById(arr[0][i]).style.backgroundColor = "black";
 		arr[0][i] = arr[0][i].split("/");
 		arr[0][i][1] = String(Number(arr[0][i][1]) + 1);
@@ -146,21 +163,21 @@ function goDown(arr) {
 }
 function fieldRight(arr){
 	for (let i = 1; i < arr.length; i++) {
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < arr[i].length; j++) {
 			arr[i][j] = rightId(arr[i][j]);
 		}
 	}
 }
 function fieldLeft(arr){
 	for (let i = 1; i < arr.length; i++) {
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < arr[i].length; j++) {
 			arr[i][j] = leftId(arr[i][j]);
 		}
 	}
 }
 function fieldDown(arr){
 	for (let i = 1; i < arr.length; i++) {
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < arr[i].length; j++) {
 			arr[i][j] = nextId(arr[i][j]);
 		}
 	}
@@ -189,7 +206,10 @@ function getRundomFigure() {
 				["6/1", "6/0", "6/-1","6/-2"],
 				["4/-1", "5/-1", "6/-1","7/-1"]],
 				// gic
-				[["5/1", "6/1", "5/0", "6/0"]],
+				[["5/1", "6/1", "5/0", "6/0"],
+				["5/1", "6/1", "5/0", "6/0"],
+				["5/1", "6/1", "5/0", "6/0"],
+				["5/1", "6/1", "5/0", "6/0"]],
 				//qarakusi
 				[["4/1", "5/1", "6/1", "5/0"],
 				["5/2", "5/1", "6/1","5/0"],
@@ -220,7 +240,7 @@ function getRundomFigure() {
 	return figure[num];
 }
 start.onclick = function () {
-	document.getElementById("erg").play();
+	//cument.getElementById("erg").play();
 	if (timeBool) {
 	sekundomer = setInterval(function() {
 		if (timerMs === 100) {
@@ -249,12 +269,12 @@ start.onclick = function () {
 		arr = nextArr;
 	}
 	if (allowNew) {
-		nextArr = drowArray;
-		drowArray = [[]];
 		allowNew = false;
+		nextArr = drowArray;
+		drowArray = [[],[],[],[]];
 	} else {
 		nextArr = getRundomFigure();
-	}
+			}
 	for (let i = 0; i < nextArr[0].length; i++) {
 		document.getElementById(`nf${nextArr[0][i]}`).style.backgroundColor = "rgba(106, 211, 99, 0.44)";
 	}
@@ -462,10 +482,10 @@ let addScore = 0;
 	if (action) {
 		addScore += currentScore;
 		lineFull();
+		level = Math.ceil(score/100);
 	} 
 		score += addScore;
 		document.getElementById("score").innerText = `${score}`;
-		level = Math.ceil(score/100);
 		speed = 1000 - (100 * level);
 		document.getElementById("level").innerText = `${level}`;
 		addScore = 0;
@@ -478,4 +498,3 @@ let leftBut = document.getElementById("leftButton");
 leftBut.addEventListener("click", leftListenerHandler);
 let downBut = document.getElementById("downButton");
 downBut.addEventListener("click", downListenerHandler);
-	 
