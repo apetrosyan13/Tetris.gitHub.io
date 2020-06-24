@@ -14,6 +14,7 @@ let timeBool = true;
 let firstStart = true;
 let drowArray = [[], [], [], []];
 let allowNew = false;
+let playIt = true;
 document.getElementById("sekundomer").innerText = `${timerMin}:${timerSec}:${timerMs}`;
 document.getElementById("level").innerText = `${level}`;
 document.getElementById("score").innerText = `${score}`;
@@ -69,16 +70,9 @@ for (let i = 1; i <= 16; i++) {
 	l++;
 }
 function selectPixel(e) {
+	if (playIt) {
 	if (e.target.style.backgroundColor !== "rgba(240, 10, 20, 0.6)") {
 		e.target.style.backgroundColor = "rgba(106, 211, 99, 0.44)";
-		// let newId = e.target.id;
-		// newId = newId.split("");
-		// newId.shift();
-		// newId = newId.join("");
-		// drowArray[0].push(newId);
-		// drowArray[1].push(newId);
-		// drowArray[2].push(newId);
-		// drowArray[3].push(newId);
 		let p = document.getElementsByClassName("drowPixel");
  		for (let elem of p) {
  			if (elem.style.backgroundColor !== "rgba(106, 211, 99, 0.44)") {
@@ -108,6 +102,7 @@ function selectPixel(e) {
  		}
 	}
 }
+}
 function getX(str) {
   str =str.split("/");
   str = str[0].split("");
@@ -126,6 +121,8 @@ function stopMusic() {
 
 document.getElementById("nextFigureButton").addEventListener("click", playF);
 function playF() {
+	if(playIt) {
+		playIt = false;
 	let a = document.getElementsByClassName("4");
 		for(let elem of a) {
 			if (elem.style.backgroundColor === "rgba(106, 211, 99, 0.44)") {
@@ -173,16 +170,21 @@ function playF() {
 				drowArray[i].push(coordinat);
 			}
 		}
-				console.log(drowArray)
 		}
 	allowNew = true;
 	let drawEl = document.getElementsByClassName("drowPixel");
+	let rowCount = 1;
+	let rows = 0;
 	for (let elem of drawEl) {
+		if (rowCount % 4 === 1 && row !== 1) {
+			console.log(rows)
+			rows++;
+		}
 		elem.style.backgroundColor = "black";
-		elem.setAttribute("class", `drowPixel glob ${l}/${k} ${row}`);
-
+		elem.setAttribute("class", `drowPixel glob ${l}/${k} ${rows}`);
+		rowCount++;
 	}
-			console.log(drowArray)
+}
 }
 function clearNextFigure() {
 	let p = document.getElementsByClassName("NextFigurePixel");
@@ -297,7 +299,7 @@ function getRundomFigure() {
 }
 start.onclick = function () {
 	if (firstStart) {
-	document.getElementById("erg").play();
+		document.getElementById("erg").play();
 	}
 	if (timeBool) {
 	sekundomer = setInterval(function() {
@@ -327,6 +329,7 @@ start.onclick = function () {
 		arr = nextArr;
 	}
 	if (allowNew) {
+		playIt = true;
 		allowNew = false;
 		nextArr = drowArray;
 		drowArray = [[],[],[],[]];
