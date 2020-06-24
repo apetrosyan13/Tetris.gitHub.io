@@ -296,7 +296,9 @@ function getRundomFigure() {
 	return figure[num];
 }
 start.onclick = function () {
+	if (firstStart) {
 	document.getElementById("erg").play();
+	}
 	if (timeBool) {
 	sekundomer = setInterval(function() {
 		if (timerMs === 100) {
